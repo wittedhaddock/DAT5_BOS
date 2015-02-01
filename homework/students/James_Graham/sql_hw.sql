@@ -2,4 +2,15 @@
 ## The database in structured such that each number of at bats is coupled to its respective season (year).
 ## Thus, simply by selecting the player and yearID and sorting batting in descending order...
 ## The player with ID "rilliji01" is found to have 716 at bats during the year 2007
-SELECT playerID, AB, yearID from Batting ORDER BY AB DESC
+SELECT playerID, AB, yearID from Batting 
+ORDER BY AB DESC
+
+#2 Find the name of the the player with the most at-bats in baseball history.
+## We group by the player ID and sum the at bats through as many AB entries as there are for that specific player
+## Secondly, in order to find the name of the player (data that is only available in the Master Table), 
+## we join the master table to the batting table and "zip" over the playerID index so that the total number of at bats points to the player name via playerID
+## The individual with the most at bats in the history of baseball is "Peter Edward" at 14,053 at bats. (around 2k more than hank aaron who came in 2nd) 
+SELECT b.playerID, sum(b.AB) as ab, m.nameGiven, m.playerID from Batting b 
+LEFT JOIN Master m ON m.playerID == b.playerID
+GROUP BY b.playerID
+ORDER BY ab DESC
