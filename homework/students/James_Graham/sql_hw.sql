@@ -14,3 +14,7 @@ SELECT b.playerID, sum(b.AB) as ab, m.nameGiven, m.playerID from Batting b
 LEFT JOIN Master m ON m.playerID == b.playerID
 GROUP BY b.playerID
 ORDER BY ab DESC
+
+## 3 Find the average number of at_bats of players in their rookie season.
+##NOTE: I am making two assumptiona. 1) that a rookie season is the player's first season, and 2) average AB is for that specific year (not one AB for all of bball history)
+SELECT playerID, min(yearID), avg(AB) from Batting GROUP BY playerID
