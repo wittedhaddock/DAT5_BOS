@@ -18,3 +18,13 @@ ORDER BY ab DESC
 ## 3 Find the average number of at_bats of players in their rookie season.
 ##NOTE: I am making two assumptiona. 1) that a rookie season is the player's first season, and 2) average AB is for that specific year (not one AB for all of bball history)
 SELECT playerID, min(yearID), avg(AB) from Batting GROUP BY playerID
+
+
+## 4 Find the average number of at_bats of players in their final season for all players born after 1980.
+##This uses a subquery to get the max years and the corresponding at bats from those years, and takes the average since 1980 for the number of at bats for the respective player's last season
+SELECT avg(b.AB) as at_bats_a from Batting b
+LEFT OUTER JOIN
+(Select playerID, max(yearID) as maxYear from Batting GROUP BY playerID) t1
+ON t1.maxYear = b.yearID
+AND t1.playerID = b.playerID
+WHERE  maxYear > 1980
